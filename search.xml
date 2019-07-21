@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Drupal远程代码执行漏洞（CVE-2018-7602）复现]]></title>
+    <url>%2F2019%2F07%2F21%2FDrupal%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%EF%BC%88CVE-2018-7602%EF%BC%89%E5%A4%8D%E7%8E%B0%2F</url>
+    <content type="text"><![CDATA[Drupal远程代码执行漏洞（CVE-2018-7602）复现 漏洞原理：影响软件：drupal。方式：对URL中的#进行编码两次，绕过sanitize()函数过滤。效果：任意命令执行。漏洞详细分析可参考：http://blog.nsfocus.net/cve-2018-7602-drupal/。 存在该漏洞的ip（靶机）：192.168.199.151:8081发起攻击的ip（主机）：192.168.199.195环境搭好之后，首先浏览器访问： http://192.168.199.151:8081。将会看到drupal的安装界面，直接默认配置安装就可以了，因为没有mysql环境，所以安装的时候可以选择sqlite数据库。 漏洞复现：首先需要整到一个POC，参考网址：https://github.com/pimps/CVE-2018-7600/blob/master/drupa7-CVE-2018-7602.py。执行如下命令，即可复现该漏洞。 #python3 drupa7-CVE-2018-7602.py -c “id” admin 123456 http://192.168.199.151:8081/。 #admin为用户名；123456为密码；后面ip改为靶机ip；本次实例命令为’id’。如上图所示，看到红框中的内容，得知ID命令已成功执行。]]></content>
+      <tags>
+        <tag>漏洞</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Nginx解析漏洞 复现]]></title>
     <url>%2F2019%2F07%2F21%2FNginx%20%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%2F</url>
     <content type="text"><![CDATA[Nginx 解析漏洞复现 版本信息：nginx 1.x最新版PHP 7.x最新版 由此得知，该漏洞与nginx和PHP版本无关，属于用户配置不当造成的解析漏洞。 存在该漏洞的ip（靶机）：192.168.199.173发起攻击的ip（主机）：192.168.199.195环境搭好以后，首先浏览器访问一下 http://192.168.199.173/uploadfiles/nginx.png和 http://192.168.199.173/uploadfiles/nginx.png/.php，正常访问情况如下：可以看出，在结尾添加/.php之后，就被解析成了PHP文件。然后浏览器访问 http://192.168.199.173/index.php，来测试一下上传功能。上传代码是不存在漏洞的，但是可以通过解析漏洞getshell。然后打开burp拦截，随便选一张图片进行上传。然后把拦截到的流量发送到重发器。然后在POST提交的数据最后添加一句话木马。可以看到已经上传成功了。然后试着在浏览器访问一下。可以看到已经上传成功了。然后试着在最后添加/.php全是乱码，说明一句话可能已经被解析了。试着用蚁剑连接一下。OK，可以看到已经成功拿到shell了。]]></content>
@@ -15,16 +23,6 @@
       <tags>
         <tag>漏洞</tag>
       </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[hello tomcat]]></title>
-    <url>%2F2019%2F07%2F20%2Fhello-tomcat%2F</url>
-    <content type="text"></content>
-  </entry>
-  <entry>
-    <title><![CDATA[hello twofly]]></title>
-    <url>%2F2019%2F07%2F20%2Fhello-twofly%2F</url>
-    <content type="text"></content>
   </entry>
   <entry>
     <title><![CDATA[Hello World]]></title>
