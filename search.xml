@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[CentOS 7源码安装docker]]></title>
+    <url>%2F2019%2F07%2F10%2FCentOS%207%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85docker%2F</url>
+    <content type="text"><![CDATA[CentOS 7 源码安装 dockerDocker介绍：Docker 是一个开放源代码软件项目，让应用程序布署在软件货柜下的工作可以自动化进行，借此在 Linux 操作系统上，提供一个额外的软件抽象层，以及操作系统层虚拟化的自动管理机制。 Docker 利用 Linux 核心中的资源分离机制，例如 cgroups，以及 Linux 核心名字空间，来创建独立的容器。 –维基百科 安装Docker 移除旧版本的 Docker yum remove docker \ docker-client \ docker-client-latest \ docker-common \ docker-latest \ docker-latest-logrotate \ docker-logrotate \ docker-selinux \ docker-engine-selinux \ docker-engine 创建 docker 组 groupadd docker 向 docker 组中添加您的用户 usermod -aG docker $USER 安装 Docker 依赖 yum install -y yum-utils device-mapper-persistent-data lvm2 添加源 yum-config-manager –add-repo https://download.docker.com/linux/centos/docker-ce.repo 更新 yum 缓存 yum makecache fast 安装 Docker-CE yum install -y docker-ce 开启 Docker systemctl start docker 安装 Docker Compose curl -L “https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m)” -o /usr/local/bin/docker-compose chmod +x /usr/local/bin/docker-compose 开机自启动 systemctl enable docker 镜像加速器 vim /etc/docker/daemon.json { “registry-mirrors”: [ “https://registry.docker-cn.com“ ] } 重新启动服务 systemctl daemon-reload systemctl restart docker]]></content>
+      <tags>
+        <tag>安装文档</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Drupal Drupalgeddon 2 远程代码执行漏洞（CVE-2018-7600）复现]]></title>
     <url>%2F2019%2F07%2F09%2FDrupal%20Drupalgeddon%202%20%E8%BF%9C%E7%A8%8B%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E6%BC%8F%E6%B4%9E%EF%BC%88CVE-2018-7600%EF%BC%89%E5%A4%8D%E7%8E%B0%2F</url>
     <content type="text"><![CDATA[Drupal Drupalgeddon 2 远程代码执行漏洞（CVE-2018-7600）复现 漏洞原理：Drupal 是一款用量庞大的CMS，其6/7/8版本的Form API中存在一处远程代码执行漏洞。详细介绍可参考：https://research.checkpoint.com/uncovering-drupalgeddon-2/。漏洞分析详情可参考： http://blog.nsfocus.net/cve-2018-7600-drupal-7-x/ 存在该漏洞的ip（靶机）：192.168.199.105:8080发起攻击的ip（主机）：192.168.199.195环境搭建好以后，访问http://192.168.199.105:8080/， 可以看到drupal的安装页面，默认配置安装就可以了。因为没有mysql环境，所以安装的时候可以选择sqlite数据库。 漏洞复现：打开burp拦截，拦截到安装好的drupal的流量包，发送到重发器。]]></content>
