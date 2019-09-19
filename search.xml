@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title></title>
-    <url>%2F2019%2F08%2F15%2F-untitled%2F</url>
-    <content type="text"><![CDATA[���ѷ��������뿪ʱ����alert('tomcat')�����͵����鸹����ʱ�����䰮����ʥ���ڷٿ�ʳ�� ������ �ٶ�]]></content>
+    <title><![CDATA[vmware下搭建openwrt]]></title>
+    <url>%2F2019%2F07%2F25%2Fvmware%E4%B8%8B%E6%90%AD%E5%BB%BAopenwrt%2F</url>
+    <content type="text"><![CDATA[本次搭建并非是源码安装，因为那样太费时了。 1.首先官网下载已有的系统image。网址如下： https://archive.openwrt.org/chaos_calmer/15.05.1/x86/generic/。进入网页后，找到combined-ext4.img.gz，并将其下载下来，然后解压，得到一个.img的文件。 由于.img的文件不能直接被vmware使用，需要使用qemu-img工具进行转换，转换为vmdk格式的文件。Ubuntu系统下直接执行：apt-get install -y qemu-utils 安装完成之后使用下面命令生成.vmdk格式的文件：sudo qemu-img convert -f raw openwrt-15.05.1-x86-generic-combined-ext4.img -O vmdk openwrt-15.05.1-x86-generic-combined-ext4.vmdk OK，前期准备已经完成。 2.开始搭建openwrt环境。（1）打开vmware，点击新建一个虚拟机。（2）选择自定义（高级）。（3）选择工作站12.x的兼容性。 （4）选择稍后安装操作系统（S）。先创建一个空白的硬盘。（5）这里操作系统选择Linux，版本选择其他Linux 3.x 内核。（6）虚拟机名称随意，这里我写的是openwrt-15.05.（7）处理器配置默认就可以了，直接下一步。（8）虚拟机内存也是默认的，直接下一步。（9）网络类型选择桥接模式。（10）I/O控制器类型也是默认的，直接下一步。（11）选择磁盘的类型，这里就需要注意了。一定要选择IDE，不然后面是找不到分区的。（12）继续下一步，选择创建新虚拟磁盘。（13）磁盘容量默认不变，直接下一步。（14）直接下一步，不用修改文件名。（15）点击自定义配件。 注意这里红框的东西，不要移除错了，除了红框内的硬件以外的硬件全部移除。 如上图所示，修改完成之后，点击关闭，然后点击完成。（16）如下图所示，虚拟机已经创建成功了。 3.修改配置文件。但是这个时候不要急着去开启这个虚拟机。先把前面使用qemu-img工具转换得到的openwrt-15.05.1-x86-generic-combined-ext4.vmdk 文件拷贝到刚创建的openwrt虚拟机工作目录下：拷贝到该目录下之后，编辑该虚拟机的配置文件openwrt-15.05.vmx 打开编辑器，修改：把ide1:0.fileName = “openwrt-15.05.vmdk”修改为ide1:0.fileName = “ openwrt-15.05.1-x86-generic-combined-ext4.vmdk”修改后：然后保存并退出，配置完毕，启动openwrt这台虚拟机。 这样就启动成功了！ 4.修改虚拟机ip。修改/etc/config/network文件：将红框内的ip改为与你主机同网段的ip。我的主机为192.168.43.173，所以我就随便改为了192.168.43.158。如下图所示： 然后保存并退出。然后执行/etc/init.d/network restart命令，重启一下网络。这时候使用自己的主机，ping一下这个ip。 发现此时192.168.43.158是可以ping通的。 5.浏览器访问。现在打开浏览器，输入192.168.43.158，可以看到正常访问了。点击login，会提示你设置密码。 设置完密码后，点击保存并应用。 然后使用root和刚才设置的密码进行登录，就可以看到真正的openwrt的界面了。如下图所示： 收工！到这openwrt就搭建完成了。]]></content>
+      <tags>
+        <tag>安装文档</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[Linux安装ngx_lua_waf实现waf功能]]></title>
